@@ -9,7 +9,16 @@ if exist "files\dos.bat" goto dosskip
 :: create dos.bat
 echo creating dos.bat
 echo start kill.vbs > "files\dos.bat"
-echo start cmd /k "setup-path.bat & cd C:\WINDOWS & cls & echo. & echo Microsoft(R) Windows 11 & echo    (C)Copyright Microsoft Corp 1981-2021. & echo. & echo    Batch Script by danielah05 (@flstudiodemo)" >> "files\dos.bat"
+echo for /f "tokens=4-5 delims=. " %%%%i in ('ver') do set VERSION=%%%%i.%%%%j >> "files\dos.bat"
+echo for /f "tokens=4-5 delims=[.XP " %%%%i in ('ver') do set WINXPVERSION=%%%%i.%%%%j >> "files\dos.bat"
+echo if "%%winxpversion%%" == "5.2 " goto winxpsupport >> "files\dos.bat"
+echo if "%%winxpversion%%" == "5.1 " goto winxpsupport >> "files\dos.bat"
+echo start cmd /k "setup-path.bat & cd C:\WINDOWS & cls & echo. & echo Microsoft(R) Windows %%version%% & echo    (C)Copyright Microsoft Corp 1981-2021. & echo. & echo    Batch Script by danielah05 (@flstudiodemo)" >> "files\dos.bat"
+echo goto end >> "files\dos.bat"
+echo :winxpsupport >> "files\dos.bat"
+echo start cmd /k "setup-path.bat & cd C:\WINDOWS & cls & echo. & echo Microsoft(R) Windows %%winxpversion%% & echo    (C)Copyright Microsoft Corp 1981-2021. & echo. & echo    Batch Script by danielah05 (@flstudiodemo)" >> "files\dos.bat"
+echo goto end >> "files\dos.bat"
+echo :end >> "files\dos.bat"
 :dosskip
 if exist "files\kill.vbs" goto vbsskip
 :: create kill.vbs
@@ -56,6 +65,9 @@ if exist "C:\dos" goto cdosskip
 :: move dos to c drive
 move dos C:\
 :cdosskip
+for /f "tokens=4-5 delims=[.XP " %%i in ('ver') do set WINXPVERSION=%%i.%%j 
+if "%winxpversion%" == "5.2 " goto winxpsupport
+if "%winxpversion%" == "5.1 " goto winxpsupport
 if exist "%userprofile%\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\run-dos.bat" goto dosstartupskip
 :: create run-dos.bat to start dos on startup
 echo cd C:\dos > "%userprofile%\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\run-dos.bat"
@@ -63,4 +75,13 @@ echo dos.bat >> "%userprofile%\AppData\Roaming\Microsoft\Windows\Start Menu\Prog
 :dosstartupskip
 cd C:\dos
 dos.bat
-pause
+goto end
+:winxpsupport
+if exist "C:\Documents and Settings\All Users\Start Menu\Programs\Startup\run-dos.bat" goto dosstartupskip
+:: create run-dos.bat to start dos on startup
+echo cd C:\dos > "C:\Documents and Settings\All Users\Start Menu\Programs\Startup\run-dos.bat"
+echo dos.bat >> "C:\Documents and Settings\All Users\Start Menu\Programs\Startup\run-dos.bat"
+cd C:\dos
+dos.bat
+goto end
+:end
