@@ -1,5 +1,8 @@
 # ultimate windows ui fixer
-a really poorly made shitpost batch script that ""fixes"" windows 10/11's ui 
+a really poorly made shitpost batch script that ""fixes"" windows ui 
+
+# currently supports (aka what ive tested)
+windows xp, windows vista, windows 7, windows 10, windows 11
 
 # awesome WARNING!
 when installing this, the script will start everything you boot up windows, if you dont want this uninstall the script
