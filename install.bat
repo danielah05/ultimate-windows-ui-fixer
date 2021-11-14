@@ -1,4 +1,31 @@
 @echo off
+:restart
+echo warning:
+echo when installing this, this script will start everytime you boot up your pc.
+echo.
+echo it is also not recommended that you delete the "uninstall.bat" file, doing that
+echo will make it more annoying to uninstall this script.
+echo.
+echo if you somehow accidentally delete your "uninstall.bat" file, you can redownload it from the github:
+echo https://github.com/danielh05/ultimate-windows-ui-fixer
+echo.
+echo if you do not know how to extract a zip file only using cmd, you can use the command "7za x zipname.zip"
+echo that comes from the pre bundeled 7zip copy to extract any file archives.
+echo.
+echo also keep in mind that when using this script, closing your cmd window will shutdown your pc
+echo and any explorer.exe windows that have been opened will force close automatically.
+echo.
+echo if you want this behavior to stop, you will want to either force close the script running in the background
+echo or use the "uninstall.bat" file!
+echo.
+echo now that i have gotten all of this out of the way,
+set /p runInstall=are you sure you want to install this? (y/n)
+if "%runInstall%" == "y" goto start
+if "%runInstall%" == "n" goto end
+cls
+goto restart
+:start
+cls
 if exist "C:\dos" goto cdosskip
 if exist "files" goto folderskip
 :: create files folder
