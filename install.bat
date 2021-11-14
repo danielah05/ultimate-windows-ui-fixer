@@ -1,4 +1,4 @@
-::@echo off
+@echo off
 if exist "C:\dos" goto cdosskip
 if exist "files" goto folderskip
 :: create files folder
